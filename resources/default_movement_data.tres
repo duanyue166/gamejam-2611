@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PlayerMovementData" format=3 uid="uid://byvk1gk4dwux1"]
+
+[ext_resource type="Script" uid="uid://bjjt83srvsxmp" path="res://resources/PlayerMovementData.gd" id="1_bp4ba"]
+
+[resource]
+script = ExtResource("1_bp4ba")
+speed = 500.0
+acceleration = 3000.0
+jump_velocity = -1000.0
+gravity_scale = 2.0
+air_acceleration = 2200.0
+enable_air_jump = false
+enable_wall_jump = false
+enable_dash = false
+dash_speed = 900.0
+enable_gravity_flip = false

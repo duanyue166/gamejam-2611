@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://x8jidw24itut"]
+
+[ext_resource type="Texture2D" uid="uid://dbpwsib80jw8g" path="res://assets/test/player/male_hero_template-design.png" id="1_86kq4"]
+[ext_resource type="Shader" uid="uid://dmep2e14dcior" path="res://resources/rewind_shadow.gdshader" id="2_shadow"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_shadow"]
+shader = ExtResource("2_shadow")
+shader_parameter/opacity = 2.0
+shader_parameter/ghost_color = Color(0.01738401, 0.31730202, 0.4334358, 1)
+shader_parameter/flicker_speed = 0.0
+shader_parameter/phase_frequency = 0.0
+shader_parameter/fresnel_strength = 1.5
+shader_parameter/fresnel_color = Color(0.028728155, 1.0032394, 1.0885698, 1)
+shader_parameter/wave_amplitude = 0.00999999977648
+shader_parameter/wave_frequency = 8.9190004236525
+shader_parameter/wave_speed = 3.618000171855
+shader_parameter/chroma_amount = 1.0
+shader_parameter/points_enabled = true
+shader_parameter/point_field_scale = 2.9420000922450003
+shader_parameter/point_size = 0.010000000475
+shader_parameter/point_intensity = 1.0
+shader_parameter/point_axis_speed = 0.0830000039425
+shader_parameter/point_move_mode = 2
+shader_parameter/point_color = Color(1, 1, 1, 1)
+
+[node name="RewindShadow" type="Node2D" unique_id=854917235]
+
+[node name="Timer" type="Timer" parent="." unique_id=647650441]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1109502094]
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1522557516]
+texture_filter = 1
+material = SubResource("ShaderMaterial_shadow")
+position = Vector2(0, -48)
+scale = Vector2(3, 3)
+texture = ExtResource("1_86kq4")
