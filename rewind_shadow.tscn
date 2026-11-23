@@ -2,6 +2,62 @@
 
 [ext_resource type="Texture2D" uid="uid://dbpwsib80jw8g" path="res://assets/test/player/male_hero_template-design.png" id="1_86kq4"]
 [ext_resource type="Shader" uid="uid://dmep2e14dcior" path="res://resources/rewind_shadow.gdshader" id="2_shadow"]
+[ext_resource type="Script" uid="uid://cg71puhq5d80e" path="res://rewind_shadow.gd" id="3_script"]
+[ext_resource type="Script" uid="uid://cnoqhclmldye6" path="res://addons/pixelfx/nodes/pixel_fx_2d.gd" id="4_l53sd"]
+
+[sub_resource type="Animation" id="Animation_l53sd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shadow:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1ytq8"]
+resource_name = "fade_in"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shadow:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_uea5k"]
+resource_name = "fade_out"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shadow:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uea5k"]
+_data = {
+&"RESET": SubResource("Animation_l53sd"),
+&"fade_in": SubResource("Animation_1ytq8"),
+&"fade_out": SubResource("Animation_uea5k")
+}
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_shadow"]
 shader = ExtResource("2_shadow")
@@ -24,10 +80,26 @@ shader_parameter/point_move_mode = 2
 shader_parameter/point_color = Color(1, 1, 1, 1)
 
 [node name="RewindShadow" type="Node2D" unique_id=854917235]
+script = ExtResource("3_script")
 
 [node name="Timer" type="Timer" parent="." unique_id=647650441]
+process_callback = 0
+wait_time = 3.0
+one_shot = true
+autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1109502094]
+libraries/ = SubResource("AnimationLibrary_uea5k")
+
+[node name="PixelFx2D" type="Node2D" parent="." unique_id=1179948384]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, 7.9999995)
+scale = Vector2(1.67, 1.67)
+script = ExtResource("4_l53sd")
+effect = "scifi/teleporter-pad"
+autoplay = false
+palette = PackedColorArray()
+metadata/_custom_type_script = "uid://cnoqhclmldye6"
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1522557516]
 texture_filter = 1
@@ -35,3 +107,5 @@ material = SubResource("ShaderMaterial_shadow")
 position = Vector2(0, -48)
 scale = Vector2(3, 3)
 texture = ExtResource("1_86kq4")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -17,12 +17,14 @@ const WALK_MIN_SPEED := 5.0
 const RUN_SPEED_RATIO := 0.7
 const RUN_EXIT_RATIO := 0.75
 const COYOTE_TIME := 0.1
+const REWIND_SHADOW_SCENE: PackedScene = preload("res://rewind_shadow.tscn")
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var start_pos := global_position
 
 @export var movement_data : PlayerMovementData
+@export var rewind_effect_layer: Node2D
 
 
 var could_air_jump := false
@@ -35,12 +37,16 @@ var gravity_sign := 1.0
 var gravity_flip_cooldown_left := 0.0
 var jumped_this_frame := false
 var _animation_state := AnimationState.IDLE
+var _rewind_shadow: RewindShadow
 
 func _ready() -> void:
 	sprite.animation_finished.connect(_on_animation_finished)
 	_change_animation_state(AnimationState.IDLE, true)
 
 func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed(&"ability_1") and _use_rewind():
+		return
+
 	var input_axis := Input.get_axis("move_left", "move_right")
 	coyote_time_left = maxf(coyote_time_left - delta, 0.0)
 	gravity_flip_cooldown_left = maxf(gravity_flip_cooldown_left - delta, 0.0)
@@ -69,6 +75,31 @@ func _physics_process(delta: float) -> void:
 	if just_left_ledge:
 		coyote_time_left = COYOTE_TIME
 	update_animation(input_axis, attack_requested)
+
+func _use_rewind() -> bool:
+	if is_instance_valid(_rewind_shadow) and not _rewind_shadow.is_queued_for_deletion():
+		var anchor := _rewind_shadow
+		_rewind_shadow = null
+		global_position = anchor.global_position
+		reset_physics_interpolation()
+		velocity = Vector2.ZERO
+		dash_time_left = 0.0
+		coyote_time_left = 0.0
+		anchor.consume()
+		return true
+
+	if is_instance_valid(rewind_effect_layer):
+		var shadow := REWIND_SHADOW_SCENE.instantiate() as RewindShadow
+		rewind_effect_layer.add_child(shadow)
+		shadow.global_position = global_position
+		shadow.capture_frame(sprite)
+		shadow.expired.connect(_on_rewind_shadow_expired)
+		_rewind_shadow = shadow
+	return false
+
+func _on_rewind_shadow_expired(shadow: RewindShadow) -> void:
+	if _rewind_shadow == shadow:
+		_rewind_shadow = null
 
 func set_gravity_inverted(inverted: bool) -> void:
 	gravity_sign = -1.0 if inverted else 1.0

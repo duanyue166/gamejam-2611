@@ -7,5 +7,52 @@
 
 [node name="TestStage" parent="." unique_id=1247203399 instance=ExtResource("1_0xm2m")]
 
-[node name="Player" parent="." unique_id=1532610965 instance=ExtResource("2_h2yge")]
+[node name="EffectLayer" type="Node2D" parent="." unique_id=1832524616]
+
+[node name="Player" parent="." unique_id=1532610965 node_paths=PackedStringArray("rewind_effect_layer") instance=ExtResource("2_h2yge")]
 position = Vector2(-576, 0)
+rewind_effect_layer = NodePath("../EffectLayer")
+
+[node name="Control" type="Control" parent="." unique_id=2117940723]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control" unique_id=226349313]
+layout_mode = 0
+offset_left = -112.0
+offset_top = -160.0
+offset_right = 140.0
+offset_bottom = -120.0
+theme_override_font_sizes/font_size = 28
+text = "轻按K（或者空格键）小跳，长按大跳"
+
+[node name="Label2" type="Label" parent="Control" unique_id=1092965730]
+layout_mode = 0
+offset_left = 576.0
+offset_top = -376.0
+offset_right = 846.0
+offset_bottom = -336.0
+theme_override_font_sizes/font_size = 28
+text = "J键攻击"
+
+[node name="Label4" type="Label" parent="Control" unique_id=1972971897]
+layout_mode = 0
+offset_left = 904.0
+offset_top = -288.0
+offset_right = 1319.0
+offset_bottom = -205.0
+theme_override_font_sizes/font_size = 28
+text = "H 键放置一个锚点，
+3s时间内再按H可以返回这个位置
+目前可以在任意位置设置锚点（包括空中）"
+
+[node name="Label3" type="Label" parent="Control" unique_id=109655704]
+layout_mode = 0
+offset_left = -536.0
+offset_top = -200.0
+offset_right = -266.0
+offset_bottom = -160.0
+theme_override_font_sizes/font_size = 28
+text = "A/D 左右移动"
