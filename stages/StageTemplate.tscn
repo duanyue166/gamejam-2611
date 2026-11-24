@@ -1,14 +1,18 @@
 [gd_scene format=3 uid="uid://dt0acnut7n1w"]
 
-[ext_resource type="TileSet" uid="uid://dg2rt6g3a62v0" path="res://resources/tileset/debug_tileset.tres" id="1_n7jfu"]
+[ext_resource type="TileSet" uid="uid://dg2rt6g3a62v0" path="res://resources/tileset/debug_tileset_2x.tres" id="1_n7jfu"]
 [ext_resource type="Script" uid="uid://dwkvmgsayqeyg" path="res://stages/StageTemplate.gd" id="1_onjlo"]
+[ext_resource type="TileSet" uid="uid://25lac0fq6kn2" path="res://resources/tileset/debug_tileset_1x.tres" id="3_d1lfo"]
 
 [node name="StageTemplate" type="Node2D" unique_id=24828507]
 script = ExtResource("1_onjlo")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1968143537]
+[node name="TileMapLayer2x" type="TileMapLayer" parent="." unique_id=1968143537]
 tile_set = ExtResource("1_n7jfu")
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1601979544]
 
-[node name="Actors" type="Node2D" parent="."]
+[node name="Actors" type="Node2D" parent="." unique_id=1239989249]
+
+[node name="TileMapLayer1x" type="TileMapLayer" parent="." unique_id=209265940]
+tile_set = ExtResource("3_d1lfo")

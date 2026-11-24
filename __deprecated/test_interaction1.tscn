@@ -1,8 +1,8 @@
 [gd_scene format=4 uid="uid://cgtub8qjfhvg0"]
 
-[ext_resource type="Script" uid="uid://b7qjmwwiv1g0i" path="res://tests/test_interaction.gd" id="1_q2h8f"]
+[ext_resource type="Script" path="res://tests/test_interaction.gd" id="1_q2h8f"]
 [ext_resource type="PackedScene" uid="uid://yeoavjbwaut6" path="res://interaction/interact_button.tscn" id="2_c061v"]
-[ext_resource type="TileSet" uid="uid://dg2rt6g3a62v0" path="res://resources/tileset/debug_tileset.tres" id="3_bcjr0"]
+[ext_resource type="TileSet" uid="uid://dg2rt6g3a62v0" path="res://resources/tileset/debug_tileset_2x.tres" id="3_bcjr0"]
 [ext_resource type="PackedScene" uid="uid://b0hrb8xrj1w4d" path="res://player.tscn" id="4_db7j1"]
 [ext_resource type="PackedScene" uid="uid://dq5ijwk342s7a" path="res://mechanisms/moving_platform.tscn" id="5_bhr1q"]
 

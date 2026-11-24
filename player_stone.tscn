@@ -51,15 +51,15 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g81ma"]
-size = Vector2(54, 94)
+size = Vector2(86, 115)
 
 [node name="PlayerStone" type="CharacterBody2D" unique_id=1927736343]
 collision_layer = 0
 script = ExtResource("4_stone")
 
 [node name="PlayerStone" type="Sprite2D" parent="." unique_id=1747483239]
-position = Vector2(0, -47.5)
-scale = Vector2(0.825, 0.8454546)
+position = Vector2(0, -57.999996)
+scale = Vector2(1.0749999, 1.0363637)
 texture = ExtResource("1_xlpnj")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=110562148]
@@ -82,7 +82,7 @@ collision_mask = 0
 sync_to_physics = false
 
 [node name="PlatformShape" type="CollisionShape2D" parent="Platform" unique_id=1076665495]
-position = Vector2(0, -47)
+position = Vector2(0, -57.5)
 shape = SubResource("RectangleShape2D_g81ma")
 one_way_collision = true
 

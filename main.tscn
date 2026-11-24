@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://ck12oxjygim6r"]
 
 [ext_resource type="Script" uid="uid://d2efwvn5xp32y" path="res://main.gd" id="1_lquwl"]
+[ext_resource type="PackedScene" uid="uid://btfiuf13f8h1o" path="res://stages/stage_01_intro.tscn" id="2_7mycd"]
 [ext_resource type="PackedScene" uid="uid://b0hrb8xrj1w4d" path="res://player.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://blx2a6881f2sb" path="res://tests/test_interaction.tscn" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://bjxhtf4rawcxo" path="res://debug_ui.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://ksu861xvggho" path="res://tests/test_bg.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" path="res://ui/gameplay_ui.tscn" id="5_gameplay_ui"]
 
 [node name="Main" type="Node" unique_id=1521315473]
 script = ExtResource("1_lquwl")
-main_scene = ExtResource("2_lquwl")
+main_scene = ExtResource("2_7mycd")
 
 [node name="EffectLayer" type="Node2D" parent="." unique_id=1832524616]
 
