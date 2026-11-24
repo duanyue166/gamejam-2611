@@ -17,3 +17,4 @@ extends Resource
 @export var enable_gravity_flip := true
 @export var gravity_flip_cooldown = 0.25
 @export var gravity_flip_speed = 150.0
+@export_range(0.0, 512.0, 1.0, "or_greater", "suffix:px") var knockback_distance: float = 112.0

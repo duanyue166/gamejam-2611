@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://caf5180kaln4f"]
+
+[ext_resource type="Texture2D" uid="uid://dxsaac05cxj5o" path="res://assets/test/player/player_stone.png" id="1_xlpnj"]
+[ext_resource type="Shape2D" uid="uid://dea0f3pb4jfbn" path="res://resources/collision_shapes/player_default_collision_shape.tres" id="2_a7ri2"]
+[ext_resource type="SpriteFrames" uid="uid://b1cy718upnycd" path="res://resources/vfx/explosions-dirt-explosion.res" id="3_q5mt5"]
+[ext_resource type="Script" uid="uid://cecbguw6nhm5w" path="res://player_stone.gd" id="4_stone"]
+
+[sub_resource type="Animation" id="Animation_1ew6o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_vuwoh"]
+resource_name = "fade_out"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_a7ri2"]
+resource_name = "fall"
+
+[sub_resource type="Animation" id="Animation_q5mt5"]
+resource_name = "still"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1ew6o"]
+_data = {
+&"RESET": SubResource("Animation_1ew6o"),
+&"fade_out": SubResource("Animation_vuwoh"),
+&"fall": SubResource("Animation_a7ri2"),
+&"still": SubResource("Animation_q5mt5")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g81ma"]
+size = Vector2(54, 94)
+
+[node name="PlayerStone" type="CharacterBody2D" unique_id=1927736343]
+collision_layer = 0
+script = ExtResource("4_stone")
+
+[node name="PlayerStone" type="Sprite2D" parent="." unique_id=1747483239]
+position = Vector2(0, -47.5)
+scale = Vector2(0.825, 0.8454546)
+texture = ExtResource("1_xlpnj")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=110562148]
+position = Vector2(0, -48)
+shape = ExtResource("2_a7ri2")
+debug_color = Color(0.9728084, 0, 0.44177988, 0.41960785)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=920371546]
+libraries/ = SubResource("AnimationLibrary_1ew6o")
+
+[node name="VFX" type="AnimatedSprite2D" parent="." unique_id=1551547153]
+visible = false
+position = Vector2(0, -88)
+sprite_frames = ExtResource("3_q5mt5")
+animation = &"pound"
+
+[node name="Platform" type="AnimatableBody2D" parent="." unique_id=1206930740]
+collision_layer = 16
+collision_mask = 0
+sync_to_physics = false
+
+[node name="PlatformShape" type="CollisionShape2D" parent="Platform" unique_id=1076665495]
+position = Vector2(0, -47)
+shape = SubResource("RectangleShape2D_g81ma")
+one_way_collision = true
+
+[node name="PlatformTimer" type="Timer" parent="." unique_id=448003272]
+process_callback = 0
+wait_time = 3.0
+one_shot = true
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]
+[connection signal="animation_finished" from="VFX" to="VFX" method="hide"]
+[connection signal="timeout" from="PlatformTimer" to="." method="fade_out"]

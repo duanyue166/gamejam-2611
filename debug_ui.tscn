@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://bjxhtf4rawcxo"]
+
+[ext_resource type="Script" uid="uid://dajlkgfq10lre" path="res://debug_ui.gd" id="1_dbg"]
+
+[node name="DebugUI" type="CanvasLayer" unique_id=2095391]
+layer = 100
+scale = Vector2(1.5, 1.5)
+transform = Transform2D(1.5, 0, 0, 1.5, 0, 0)
+script = ExtResource("1_dbg")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=937948105]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 312.0
+offset_bottom = 72.0
+
+[node name="Margin" type="MarginContainer" parent="Panel" unique_id=1038630100]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin" unique_id=795384641]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/Margin/VBox" unique_id=1999216289]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Movement Data  (F1 hide)"
+
+[node name="Scroll" type="ScrollContainer" parent="Panel/Margin/VBox" unique_id=236383754]
+custom_minimum_size = Vector2(0, 360)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Rows" type="VBoxContainer" parent="Panel/Margin/VBox/Scroll" unique_id=951640489]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/Margin/VBox" unique_id=1202245951]
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="Panel/Margin/VBox/Buttons" unique_id=325054623]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save to resource"
+
+[node name="ResetButton" type="Button" parent="Panel/Margin/VBox/Buttons" unique_id=1232645123]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Revert"
+
+[node name="Status" type="Label" parent="Panel/Margin/VBox" unique_id=552554487]
+unique_name_in_owner = true
+layout_mode = 2

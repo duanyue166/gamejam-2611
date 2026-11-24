@@ -1,7 +1,10 @@
 class_name DebugPlayer
 extends CharacterBody2D
 
-enum AnimationState { IDLE, WALK, RUN, JUMP, FALL, FALL_LOOP, ATTACK, ATTACK_END }
+signal health_changed(current_health: int, maximum_health: int)
+signal died
+
+enum AnimationState { IDLE, WALK, RUN, JUMP, FALL, FALL_LOOP, ATTACK, ATTACK_END, HURT }
 
 const ANIMATIONS: Dictionary[AnimationState, StringName] = {
 	AnimationState.IDLE: &"idle",
@@ -12,20 +15,27 @@ const ANIMATIONS: Dictionary[AnimationState, StringName] = {
 	AnimationState.FALL_LOOP: &"fall_loop",
 	AnimationState.ATTACK: &"attack",
 	AnimationState.ATTACK_END: &"attack_end",
+	AnimationState.HURT: &"hurt",
 }
 const WALK_MIN_SPEED := 5.0
 const RUN_SPEED_RATIO := 0.7
 const RUN_EXIT_RATIO := 0.75
 const COYOTE_TIME := 0.1
+const INVULNERABILITY_DURATION := 1.0
+const STONE_EXIT_INVULNERABILITY_DURATION := 1.0
+const BLINK_INTERVAL := 0.1
+const KNOCKBACK_DURATION := 0.2
+const HURT_BOUNCE_SPEED := 320.0
 const REWIND_SHADOW_SCENE: PackedScene = preload("res://rewind_shadow.tscn")
-
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-
-@onready var start_pos := global_position
+const PLAYER_STONE_SCENE: PackedScene = preload("res://player_stone.tscn")
 
 @export var movement_data : PlayerMovementData
 @export var rewind_effect_layer: Node2D
+@export_range(1, 99, 1, "or_greater") var max_health: int = 5
 
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var health: int = max_health
+@onready var _hazard_detector: Area2D = $HazardDetector
 
 var could_air_jump := false
 var could_air_dash := true
@@ -38,20 +48,44 @@ var gravity_flip_cooldown_left := 0.0
 var jumped_this_frame := false
 var _animation_state := AnimationState.IDLE
 var _rewind_shadow: RewindShadow
+var _stone: PlayerStone
+var _invulnerability_left := 0.0
+var _knockback_time_left := 0.0
+var _knockback_velocity := 0.0
 
 func _ready() -> void:
 	sprite.animation_finished.connect(_on_animation_finished)
 	_change_animation_state(AnimationState.IDLE, true)
 
 func _physics_process(delta: float) -> void:
+	_update_invulnerability(delta)
+	if health > 0 and Input.is_action_just_pressed(&"ability_2"):
+		if is_petrified():
+			_leave_stone(false)
+			return
+		_petrify()
+
+	if is_petrified():
+		if Input.is_action_just_pressed(&"ability_1") and _has_rewind_anchor():
+			_use_rewind()
+		else:
+			_stone.move_as_stone(get_gravity() * Vector2(1.0, gravity_sign) * movement_data.gravity_scale, delta)
+			global_position = _stone.global_position
+		return
+
+	_check_hazards()
+	gravity_flip_cooldown_left = maxf(gravity_flip_cooldown_left - delta, 0.0)
+	update_dash_timers(delta)
+	if health == 0 or _animation_state == AnimationState.HURT or _knockback_time_left > 0.0:
+		_move_while_hurt(delta)
+		return
+
 	if Input.is_action_just_pressed(&"ability_1") and _use_rewind():
 		return
 
 	var input_axis := Input.get_axis("move_left", "move_right")
 	coyote_time_left = maxf(coyote_time_left - delta, 0.0)
-	gravity_flip_cooldown_left = maxf(gravity_flip_cooldown_left - delta, 0.0)
 	var flipped := handle_gravity_flip()
-	update_dash_timers(delta)
 	handle_dash(input_axis)
 	if dash_time_left > 0.0:
 		velocity = Vector2(dash_direction * movement_data.dash_speed, 0.0)
@@ -76,10 +110,51 @@ func _physics_process(delta: float) -> void:
 		coyote_time_left = COYOTE_TIME
 	update_animation(input_axis, attack_requested)
 
+func is_petrified() -> bool:
+	return is_instance_valid(_stone)
+
+
+func _petrify() -> void:
+	_stone = PLAYER_STONE_SCENE.instantiate() as PlayerStone
+	get_parent().add_child(_stone)
+	_stone.global_position = global_position
+	_stone.reset_physics_interpolation()
+	_stone.begin(up_direction, velocity, is_on_floor())
+	velocity = Vector2.ZERO
+	dash_time_left = 0.0
+	coyote_time_left = 0.0
+	jumped_this_frame = false
+	_knockback_time_left = 0.0
+	$CollisionShape2D.disabled = true
+	$InteractionArea.set_interaction_enabled(false)
+	sprite.hide()
+
+
+func _leave_stone(keep_platform: bool) -> void:
+	var stone := _stone
+	_stone = null
+	velocity = stone.velocity
+	if keep_platform:
+		stone.leave_as_platform()
+	else:
+		stone.fade_out()
+	$CollisionShape2D.disabled = false
+	$InteractionArea.set_interaction_enabled(true)
+	_invulnerability_left = maxf(_invulnerability_left, STONE_EXIT_INVULNERABILITY_DURATION)
+	sprite.show()
+	_change_animation_state(AnimationState.IDLE, true)
+
+
+func _has_rewind_anchor() -> bool:
+	return is_instance_valid(_rewind_shadow) and not _rewind_shadow.is_queued_for_deletion()
+
+
 func _use_rewind() -> bool:
-	if is_instance_valid(_rewind_shadow) and not _rewind_shadow.is_queued_for_deletion():
+	if _has_rewind_anchor():
 		var anchor := _rewind_shadow
 		_rewind_shadow = null
+		if is_petrified():
+			_leave_stone(true)
 		global_position = anchor.global_position
 		reset_physics_interpolation()
 		velocity = Vector2.ZERO
@@ -268,6 +343,9 @@ func _on_animation_finished() -> void:
 				_change_animation_state(pick_air_anim_state())
 		AnimationState.ATTACK_END:
 			_change_animation_state(AnimationState.IDLE)
+		AnimationState.HURT:
+			if health > 0:
+				_change_animation_state(pick_ground_anim_state() if is_on_floor() else pick_air_anim_state())
 
 func is_attacking() -> bool:
 	return _animation_state == AnimationState.ATTACK
@@ -297,11 +375,85 @@ func pick_air_anim_state() -> AnimationState:
 	return AnimationState.FALL
 
 
-func _on_hazard_detector_area_entered(_area: Area2D) -> void:
-	global_position = start_pos
+func take_damage(amount: int, source_position: Vector2) -> void:
+	if amount <= 0 or health <= 0 or _invulnerability_left > 0.0 or is_petrified():
+		return
+
+	health = maxi(health - amount, 0)
+	_invulnerability_left = INVULNERABILITY_DURATION
+	sprite.show()
 	dash_time_left = 0.0
 	coyote_time_left = 0.0
-	gravity_flip_cooldown_left = 0.0
-	set_gravity_inverted(false)
 	jumped_this_frame = false
+
+	var direction := signf(global_position.x - source_position.x)
+	if direction == 0.0:
+		direction = 1.0 if sprite.flip_h else -1.0
+	var distance := maxf(movement_data.knockback_distance, 0.0)
+	_knockback_velocity = direction * distance / KNOCKBACK_DURATION
+	_knockback_time_left = KNOCKBACK_DURATION if distance > 0.0 else 0.0
+	velocity = up_direction * HURT_BOUNCE_SPEED if distance > 0.0 else Vector2.ZERO
+	_change_animation_state(AnimationState.HURT, true)
+
+	var is_fatal := health == 0
+	if is_fatal:
+		$InteractionArea.set_interaction_enabled(false)
+	health_changed.emit(health, max_health)
+	if is_fatal:
+		died.emit()
+
+
+func respawn(spawn_position: Vector2) -> void:
+	if is_petrified():
+		_leave_stone(false)
+	global_position = spawn_position
+	reset_physics_interpolation()
+	$Camera2D.reset_smoothing()
+	velocity = Vector2.ZERO
+	set_gravity_inverted(false)
+	could_air_jump = false
+	could_air_dash = true
+	coyote_time_left = 0.0
+	dash_time_left = 0.0
+	dash_cooldown_left = 0.0
+	gravity_flip_cooldown_left = 0.0
+	jumped_this_frame = false
+	_invulnerability_left = 0.0
+	_knockback_time_left = 0.0
+	_knockback_velocity = 0.0
+	if _has_rewind_anchor():
+		_rewind_shadow.consume()
+	_rewind_shadow = null
+
+	sprite.show()
 	_change_animation_state(AnimationState.IDLE, true)
+	$InteractionArea.set_interaction_enabled(true)
+	health = max_health
+	health_changed.emit(health, max_health)
+
+
+func _check_hazards() -> void:
+	if health <= 0 or _invulnerability_left > 0.0:
+		return
+	for hazard in _hazard_detector.get_overlapping_areas():
+		if not hazard.is_queued_for_deletion():
+			take_damage(1, hazard.global_position)
+			return
+
+
+func _update_invulnerability(delta: float) -> void:
+	if _invulnerability_left <= 0.0:
+		return
+	_invulnerability_left = maxf(_invulnerability_left - delta, 0.0)
+	var elapsed := INVULNERABILITY_DURATION - _invulnerability_left
+	if not is_petrified():
+		sprite.visible = _invulnerability_left == 0.0 or int(elapsed / BLINK_INTERVAL) % 2 == 0
+
+
+func _move_while_hurt(delta: float) -> void:
+	var knockback_step := minf(_knockback_time_left, delta)
+	_knockback_time_left -= knockback_step
+	# Limit the last physics step to the remaining knockback distance.
+	velocity.x = _knockback_velocity * (knockback_step / delta)
+	apply_gravity(delta)
+	move_and_slide()

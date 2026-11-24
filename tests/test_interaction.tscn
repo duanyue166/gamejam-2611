@@ -1,0 +1,34 @@
+[gd_scene format=4 uid="uid://blx2a6881f2sb"]
+
+[ext_resource type="PackedScene" uid="uid://dt0acnut7n1w" path="res://stages/StageTemplate.tscn" id="1_o6he8"]
+[ext_resource type="PackedScene" uid="uid://yeoavjbwaut6" path="res://interaction/interact_button.tscn" id="2_c061v"]
+[ext_resource type="TileSet" uid="uid://dg2rt6g3a62v0" path="res://resources/tileset/debug_tileset.tres" id="3_bcjr0"]
+[ext_resource type="PackedScene" uid="uid://dq5ijwk342s7a" path="res://mechanisms/moving_platform.tscn" id="5_bhr1q"]
+[ext_resource type="PackedScene" path="res://hazards/spikes.tscn" id="6_spikes"]
+
+[node name="TestInteraction" unique_id=24828507 instance=ExtResource("1_o6he8")]
+
+[node name="SpawnPoint" parent="." index="1" unique_id=1601979544]
+position = Vector2(-320, 0)
+
+[node name="InteractButton" parent="." index="2" unique_id=1313954042 instance=ExtResource("2_c061v")]
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="." index="3" unique_id=1107194185]
+tile_map_data = PackedByteArray("AAD8/wAAAAABAAAAAAD9/wAAAAABAAAAAAD+/wAAAAABAAAAAAD+/wEAAAABAAAAAAD//wEAAAABAAAAAAAAAAEAAAABAAAAAAABAAEAAAABAAAAAAACAAEAAAABAAAAAAADAAEAAAABAAAAAAAEAAEAAAABAAAAAAAFAAEAAAABAAAAAAAGAAEAAAABAAAAAAAGAAAAAAABAAAAAAAFAAAAAAABAAAAAAAEAAAAAAABAAAAAAADAAAAAAABAAAAAAACAAAAAAABAAAAAAABAAAAAAABAAAAAAAAAAAAAAABAAAAAAD//wAAAAABAAAAAAD9/wEAAAABAAAAAAD8/wEAAAABAAAAAAAHAAEAAAABAAAAAAAHAAAAAAABAAAAAAA=")
+tile_set = ExtResource("3_bcjr0")
+
+[node name="AnchorA" type="Marker2D" parent="." index="4" unique_id=1450453337]
+position = Vector2(394, -11)
+
+[node name="AnchorB" type="Marker2D" parent="." index="5" unique_id=1576810216]
+position = Vector2(394, -203)
+
+[node name="MovingPlatform" parent="." index="6" unique_id=1237543025 node_paths=PackedStringArray("anchor_a", "anchor_b") instance=ExtResource("5_bhr1q")]
+position = Vector2(394, -11)
+anchor_a = NodePath("../AnchorA")
+anchor_b = NodePath("../AnchorB")
+
+[node name="Spikes" parent="." index="7" instance=ExtResource("6_spikes")]
+position = Vector2(-448, 0)
+
+[connection signal="activated" from="InteractButton" to="MovingPlatform" method="move_on"]

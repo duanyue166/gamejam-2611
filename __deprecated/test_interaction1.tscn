@@ -1,0 +1,32 @@
+[gd_scene format=4 uid="uid://cgtub8qjfhvg0"]
+
+[ext_resource type="Script" uid="uid://b7qjmwwiv1g0i" path="res://tests/test_interaction.gd" id="1_q2h8f"]
+[ext_resource type="PackedScene" uid="uid://yeoavjbwaut6" path="res://interaction/interact_button.tscn" id="2_c061v"]
+[ext_resource type="TileSet" uid="uid://dg2rt6g3a62v0" path="res://resources/tileset/debug_tileset.tres" id="3_bcjr0"]
+[ext_resource type="PackedScene" uid="uid://b0hrb8xrj1w4d" path="res://player.tscn" id="4_db7j1"]
+[ext_resource type="PackedScene" uid="uid://dq5ijwk342s7a" path="res://mechanisms/moving_platform.tscn" id="5_bhr1q"]
+
+[node name="test_interaction" type="Node2D" unique_id=1589649827]
+script = ExtResource("1_q2h8f")
+
+[node name="InteractButton" parent="." unique_id=1313954042 instance=ExtResource("2_c061v")]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=837898197]
+tile_map_data = PackedByteArray("AAD8/wAAAAABAAAAAAD9/wAAAAABAAAAAAD+/wAAAAABAAAAAAD+/wEAAAABAAAAAAD//wEAAAABAAAAAAAAAAEAAAABAAAAAAABAAEAAAABAAAAAAACAAEAAAABAAAAAAADAAEAAAABAAAAAAAEAAEAAAABAAAAAAAFAAEAAAABAAAAAAAGAAEAAAABAAAAAAAGAAAAAAABAAAAAAAFAAAAAAABAAAAAAAEAAAAAAABAAAAAAADAAAAAAABAAAAAAACAAAAAAABAAAAAAABAAAAAAABAAAAAAAAAAAAAAABAAAAAAD//wAAAAABAAAAAAD9/wEAAAABAAAAAAD8/wEAAAABAAAAAAAHAAEAAAABAAAAAAAHAAAAAAABAAAAAAA=")
+tile_set = ExtResource("3_bcjr0")
+
+[node name="Player" parent="." unique_id=1532610965 instance=ExtResource("4_db7j1")]
+position = Vector2(-152, -8)
+
+[node name="AnchorA" type="Marker2D" parent="." unique_id=1156742265]
+position = Vector2(394, -11)
+
+[node name="AnchorB" type="Marker2D" parent="." unique_id=924493331]
+position = Vector2(394, -203)
+
+[node name="MovingPlatform" parent="." unique_id=1237543025 node_paths=PackedStringArray("anchor_a", "anchor_b") instance=ExtResource("5_bhr1q")]
+position = Vector2(394, -11)
+anchor_a = NodePath("../AnchorA")
+anchor_b = NodePath("../AnchorB")
+
+[connection signal="activated" from="InteractButton" to="MovingPlatform" method="move_on"]

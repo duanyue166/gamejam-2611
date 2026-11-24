@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cb37if7amirgx" path="res://assets/test/player/male_hero_template-combo_1.png" id="1_1jxqw"]
 [ext_resource type="Texture2D" uid="uid://dvna0n2433re4" path="res://assets/test/player/male_hero_template-idle.png" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://ngyshsce2hlu" path="res://debug_player.gd" id="1_b26j0"]
+[ext_resource type="Script" uid="uid://ngyshsce2hlu" path="res://player.gd" id="1_b26j0"]
 [ext_resource type="Texture2D" uid="uid://6mfmnooorsec" path="res://assets/test/player/male_hero_template-fall.png" id="1_sweqy"]
 [ext_resource type="Texture2D" uid="uid://c8kx40gohgpn7" path="res://assets/test/player/male_hero_template-fall_loop.png" id="2_2hs0m"]
 [ext_resource type="Texture2D" uid="uid://d13s1ht8hgr38" path="res://assets/test/player/male_hero_template-combo_1_end.png" id="2_dw050"]
@@ -10,6 +10,8 @@
 [ext_resource type="Resource" uid="uid://byvk1gk4dwux1" path="res://resources/default_movement_data.tres" id="2_n7ghd"]
 [ext_resource type="Texture2D" uid="uid://bikh13j4d0te8" path="res://assets/test/player/male_hero_template-walk.png" id="2_onrkg"]
 [ext_resource type="Texture2D" uid="uid://d1brrt35ydusr" path="res://assets/test/player/male_hero_template-run.png" id="3_hqtel"]
+[ext_resource type="Script" uid="uid://bc401l5yoexw8" path="res://interaction/player_interaction_area.gd" id="11_interaction"]
+[ext_resource type="Shape2D" uid="uid://dea0f3pb4jfbn" path="res://resources/collision_shapes/player_default_collision_shape.tres" id="11_ivps1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1xqrm"]
 atlas = ExtResource("1_1jxqw")
@@ -277,6 +279,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ibah8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3iwfv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwsg1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwsg1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwsg1")
+}],
+"loop": 0,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_onrkg")
 }, {
 "duration": 1.0,
@@ -404,11 +426,28 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n7ghd"]
-radius = 16.0
-height = 96.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_interaction"]
+radius = 60.074955
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_interaction_prompt"]
+content_margin_left = 12.0
+content_margin_top = 5.0
+content_margin_right = 12.0
+content_margin_bottom = 5.0
+bg_color = Color(0.06, 0.08, 0.11, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.71, 0.53, 0.65)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [node name="Player" type="CharacterBody2D" unique_id=1532610965]
+collision_layer = 8
+collision_mask = 17
 floor_constant_speed = true
 floor_snap_length = 10.0
 script = ExtResource("1_b26j0")
@@ -419,12 +458,41 @@ texture_filter = 1
 position = Vector2(0, -48.000004)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_g81ma")
-animation = &"idle"
+animation = &"hurt"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1699179257]
 position = Vector2(0, -48)
-shape = SubResource("CapsuleShape2D_n7ghd")
+shape = ExtResource("11_ivps1")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=75057110]
 process_callback = 0
 position_smoothing_enabled = true
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=1443650639]
+position = Vector2(0, -48)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("11_interaction")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=851854886]
+shape = SubResource("CircleShape2D_interaction")
+debug_color = Color(0.6745098, 0.30588236, 1, 0.41960785)
+
+[node name="InteractionPrompt" type="Label" parent="InteractionArea"]
+visible = false
+z_index = 10
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.99, 0.96, 0.88, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_interaction_prompt")
+horizontal_alignment = 1
+
+[node name="HazardDetector" type="Area2D" parent="." unique_id=230855606]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="HazardBox" type="CollisionShape2D" parent="HazardDetector" unique_id=19186809]
+position = Vector2(0, -48)
+shape = ExtResource("11_ivps1")

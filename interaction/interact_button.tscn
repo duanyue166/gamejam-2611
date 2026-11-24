@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://yeoavjbwaut6"]
+
+[ext_resource type="Script" uid="uid://b5wjhgq3ef261" path="res://interaction/interact_button.gd" id="1_button"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interaction"]
+size = Vector2(72, 72)
+
+[node name="InteractButton" type="Area2D" unique_id=1313954042]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_button")
+interaction_text = "拉下拉杆"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2126888867]
+position = Vector2(0, -28)
+shape = SubResource("RectangleShape2D_interaction")
+debug_color = Color(0.6745098, 0.30588236, 1, 0.41960785)
+
+[node name="Handle" type="Polygon2D" parent="." unique_id=138251763]
+position = Vector2(0, -13)
+rotation = -0.9599311
+color = Color(0.94, 0.65, 0.28, 1)
+polygon = PackedVector2Array(-3, 0, -3, -21, -7, -21, -7, -31, 7, -31, 7, -21, 3, -21, 3, 0)
+
+[node name="Base" type="Polygon2D" parent="." unique_id=744980206]
+color = Color(0.28, 0.34, 0.41, 1)
+polygon = PackedVector2Array(-18, 0, -18, -8, -10, -15, 10, -15, 18, -8, 18, 0)

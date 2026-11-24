@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://btfiuf13f8h1o"]
+
+[ext_resource type="PackedScene" uid="uid://dt0acnut7n1w" path="res://stages/StageTemplate.tscn" id="1_qtd5b"]
+
+[node name="Stage_01_Intro" unique_id=24828507 instance=ExtResource("1_qtd5b")]

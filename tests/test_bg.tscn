@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://ksu861xvggho"]
+
+[ext_resource type="Texture2D" uid="uid://sdojdb5jhksl" path="res://assets/test/bg/1.png" id="1_0t1gt"]
+[ext_resource type="Texture2D" uid="uid://b44vo3yb37bu3" path="res://assets/test/bg/2.png" id="2_3j2r4"]
+[ext_resource type="Texture2D" uid="uid://coun4fyt5sut4" path="res://assets/test/bg/3.png" id="3_c7afj"]
+
+[node name="TestBG" type="Node2D" unique_id=1759486048]
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=445596995]
+z_index = -5
+scroll_scale = Vector2(0, 0)
+
+[node name="TextureRect" type="TextureRect" parent="Parallax2D" unique_id=640281430]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_0t1gt")
+
+[node name="Parallax2D2" type="Parallax2D" parent="." unique_id=959151719]
+z_index = -5
+scroll_scale = Vector2(0.07, 0)
+repeat_size = Vector2(1920, 0)
+autoscroll = Vector2(2, 0)
+
+[node name="TextureRect" type="TextureRect" parent="Parallax2D2" unique_id=1139444242]
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("2_3j2r4")
+
+[node name="Parallax2D3" type="Parallax2D" parent="." unique_id=17983955]
+z_index = -5
+scroll_scale = Vector2(0.13, 0)
+repeat_size = Vector2(3200, 0)
+autoscroll = Vector2(5, 0)
+
+[node name="TextureRect" type="TextureRect" parent="Parallax2D3" unique_id=107935348]
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("3_c7afj")

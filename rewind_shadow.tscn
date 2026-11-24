@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://dbpwsib80jw8g" path="res://assets/test/player/male_hero_template-design.png" id="1_86kq4"]
 [ext_resource type="Shader" uid="uid://dmep2e14dcior" path="res://resources/rewind_shadow.gdshader" id="2_shadow"]
 [ext_resource type="Script" uid="uid://cg71puhq5d80e" path="res://rewind_shadow.gd" id="3_script"]
-[ext_resource type="Script" uid="uid://cnoqhclmldye6" path="res://addons/pixelfx/nodes/pixel_fx_2d.gd" id="4_l53sd"]
 
 [sub_resource type="Animation" id="Animation_l53sd"]
 length = 0.001
@@ -84,22 +83,12 @@ script = ExtResource("3_script")
 
 [node name="Timer" type="Timer" parent="." unique_id=647650441]
 process_callback = 0
-wait_time = 3.0
+wait_time = 4096.0
 one_shot = true
 autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1109502094]
 libraries/ = SubResource("AnimationLibrary_uea5k")
-
-[node name="PixelFx2D" type="Node2D" parent="." unique_id=1179948384]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(0, 7.9999995)
-scale = Vector2(1.67, 1.67)
-script = ExtResource("4_l53sd")
-effect = "scifi/teleporter-pad"
-autoplay = false
-palette = PackedColorArray()
-metadata/_custom_type_script = "uid://cnoqhclmldye6"
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1522557516]
 texture_filter = 1
