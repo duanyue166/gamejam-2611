@@ -3,6 +3,7 @@
 [ext_resource type="TileSet" uid="uid://dg2rt6g3a62v0" path="res://resources/tileset/debug_tileset_2x.tres" id="1_n7jfu"]
 [ext_resource type="Script" uid="uid://dwkvmgsayqeyg" path="res://stages/StageTemplate.gd" id="1_onjlo"]
 [ext_resource type="TileSet" uid="uid://25lac0fq6kn2" path="res://resources/tileset/debug_tileset_1x.tres" id="3_d1lfo"]
+[ext_resource type="PackedScene" path="res://stages/stage_exit.tscn" id="4_stage_exit"]
 
 [node name="StageTemplate" type="Node2D" unique_id=24828507]
 script = ExtResource("1_onjlo")
@@ -16,3 +17,5 @@ tile_set = ExtResource("1_n7jfu")
 
 [node name="TileMapLayer1x" type="TileMapLayer" parent="." unique_id=209265940]
 tile_set = ExtResource("3_d1lfo")
+
+[node name="StageExit" parent="." instance=ExtResource("4_stage_exit")]

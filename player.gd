@@ -404,11 +404,18 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 
 
 func respawn(spawn_position: Vector2) -> void:
+	global_position = spawn_position
+	reset_for_spawn()
+	health = max_health
+	health_changed.emit(health, max_health)
+
+
+func reset_for_spawn() -> void:
 	if is_petrified():
 		_leave_stone(false)
-	global_position = spawn_position
 	reset_physics_interpolation()
 	$Camera2D.reset_smoothing()
+	$Camera2D.force_update_scroll()
 	velocity = Vector2.ZERO
 	set_gravity_inverted(false)
 	could_air_jump = false
@@ -428,8 +435,6 @@ func respawn(spawn_position: Vector2) -> void:
 	sprite.show()
 	_change_animation_state(AnimationState.IDLE, true)
 	$InteractionArea.set_interaction_enabled(true)
-	health = max_health
-	health_changed.emit(health, max_health)
 
 
 func _check_hazards() -> void:

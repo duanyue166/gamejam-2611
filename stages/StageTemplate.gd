@@ -2,19 +2,13 @@ class_name StageTemplate
 extends Node2D
 
 
-@onready var spawn_point: Node2D = $SpawnPoint
+signal stage_exit_entered(player: DebugPlayer, target_stage_path: String)
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+@onready var spawn_point: Marker2D = $SpawnPoint
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func spawn(player: Node2D, spawn_id: StringName = &"default") -> void:
-	var spawn_point := get_spawn_point(spawn_id)
+	var marker := get_spawn_point(spawn_id)
 
 	if player.get_parent():
 		player.reparent($Actors)
@@ -22,7 +16,7 @@ func spawn(player: Node2D, spawn_id: StringName = &"default") -> void:
 	else:
 		$Actors.add_child(player)
 
-	player.global_position = spawn_point.global_position
+	player.global_position = marker.global_position
 
 
 func get_spawn_point(id: StringName) -> Marker2D:

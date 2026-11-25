@@ -12,9 +12,8 @@ var _target: Interactable
 func set_interaction_enabled(enabled: bool) -> void:
 	set_process_unhandled_input(enabled)
 	set_physics_process(enabled)
-	if not enabled:
-		_target = null
-		_prompt.hide()
+	_target = null
+	_prompt.hide()
 
 
 func _physics_process(_delta: float) -> void:

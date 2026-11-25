@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bjxhtf4rawcxo" path="res://debug_ui.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://ksu861xvggho" path="res://tests/test_bg.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" path="res://ui/gameplay_ui.tscn" id="5_gameplay_ui"]
+[ext_resource type="PackedScene" uid="uid://c5w4xdectf017" path="res://ui/stage_transition.tscn" id="6_stage_transition"]
 
 [node name="Main" type="Node" unique_id=1521315473]
 script = ExtResource("1_lquwl")
@@ -22,3 +23,5 @@ rewind_effect_layer = NodePath("../EffectLayer")
 [node name="TestBG" parent="." unique_id=1759486048 instance=ExtResource("4_1bvp3")]
 
 [node name="GameplayUI" parent="." unique_id=796664516 instance=ExtResource("5_gameplay_ui")]
+
+[node name="StageTransition" parent="." unique_id=1043857719 instance=ExtResource("6_stage_transition")]

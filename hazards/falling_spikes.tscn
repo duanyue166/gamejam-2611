@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bkmq8jer8li1v"]
+
+[ext_resource type="PackedScene" uid="uid://cr65u2h42k6xx" path="res://hazards/spikes.tscn" id="1_gwnt1"]
+[ext_resource type="Script" uid="uid://cpvlxtji2iufl" path="res://hazards/falling_spikes.gd" id="2_falling_spikes"]
+
+[node name="FallingSpikes" unique_id=1075517213 instance=ExtResource("1_gwnt1")]
+rotation = -3.1415927
+script = ExtResource("2_falling_spikes")

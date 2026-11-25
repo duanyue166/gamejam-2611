@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://combat/enemy_attack_area.gd" id="1_attack"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dirt"]
+size = Vector2(174, 42)
+
+[node name="DirtAttackArea" type="Area2D"]
+collision_layer = 0
+collision_mask = 32
+monitorable = false
+script = ExtResource("1_attack")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dirt")
+debug_color = Color(0.70181316, 0.49149835, 0.0051931157, 0.41960785)
+
+[node name="Lifetime" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="hit_enemy"]
+[connection signal="timeout" from="Lifetime" to="." method="queue_free"]

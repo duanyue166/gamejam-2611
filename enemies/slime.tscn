@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://7so4dwygrpk6"]
+
+[ext_resource type="Script" uid="uid://bqmdc7ga8wuv7" path="res://enemies/enemy.gd" id="1_enemy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurtbox"]
+size = Vector2(56, 34)
+
+[node name="Slime" type="Area2D" unique_id=677517500]
+collision_layer = 36
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_enemy")
+
+[node name="Outline" type="Polygon2D" parent="." unique_id=1112059054]
+color = Color(0.13, 0.24, 0.16, 1)
+polygon = PackedVector2Array(-32, -3, -32, -13, -27, -22, -19, -26, -12, -35, 0, -39, 12, -36, 21, -27, 27, -24, 32, -14, 32, -4, 26, 0, -26, 0)
+
+[node name="Body" type="Polygon2D" parent="." unique_id=2105146211]
+color = Color(0.39, 0.74, 0.37, 1)
+polygon = PackedVector2Array(-28, -5, -28, -12, -24, -19, -17, -22, -9, -32, 0, -35, 10, -32, 18, -24, 24, -21, 28, -12, 28, -6, 24, -3, -24, -3)
+
+[node name="LeftEye" type="Polygon2D" parent="." unique_id=1315707243]
+color = Color(0.13, 0.24, 0.16, 1)
+polygon = PackedVector2Array(-12, -17, -8, -17, -8, -10, -12, -10)
+
+[node name="RightEye" type="Polygon2D" parent="." unique_id=265390954]
+color = Color(0.13, 0.24, 0.16, 1)
+polygon = PackedVector2Array(8, -17, 12, -17, 12, -10, 8, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1085921664]
+position = Vector2(0, -17)
+shape = SubResource("RectangleShape2D_hurtbox")
