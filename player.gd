@@ -38,6 +38,9 @@ var stage_actors: Node2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var health: int = max_health
 @onready var _hazard_detector: Area2D = $HazardDetector
+@onready var _attack_area: EnemyAttackArea = $AttackArea
+@onready var _attack_polygon: CollisionPolygon2D = $AttackArea/CollisionPolygon2D
+@onready var _attack_animation_player: AnimationPlayer = $AnimationPlayer
 
 var could_air_jump := false
 var could_air_dash := true
@@ -130,6 +133,8 @@ func _petrify() -> void:
 	_knockback_time_left = 0.0
 	$CollisionShape2D.disabled = true
 	$InteractionArea.set_interaction_enabled(false)
+	if is_attacking():
+		_change_animation_state(AnimationState.IDLE)
 	sprite.hide()
 
 
@@ -183,6 +188,8 @@ func set_gravity_inverted(inverted: bool) -> void:
 	gravity_sign = -1.0 if inverted else 1.0
 	up_direction = Vector2.DOWN if inverted else Vector2.UP
 	sprite.flip_v = inverted
+	if is_attacking():
+		_update_attack_area_direction()
 
 func handle_gravity_flip() -> bool:
 	if not movement_data.enable_gravity_flip:
@@ -330,10 +337,24 @@ func update_animation(input_axis: float, attack_requested: bool) -> void:
 func _change_animation_state(next_state: AnimationState, restart := false) -> void:
 	if _animation_state == next_state and not restart:
 		return
+	if is_attacking():
+		_attack_animation_player.stop()
+		_attack_polygon.disabled = true
+		_attack_polygon.hide()
 	_animation_state = next_state
 	sprite.play(ANIMATIONS[next_state])
 	if restart:
 		sprite.set_frame_and_progress(0, 0.0)
+	if is_attacking():
+		_attack_area.reset_hits()
+		_update_attack_area_direction()
+		_attack_animation_player.play(ANIMATIONS[next_state])
+		_attack_animation_player.advance(0.0)
+
+func _update_attack_area_direction() -> void:
+	var direction := Vector2(-1.0 if sprite.flip_h else 1.0, gravity_sign)
+	var offset := sprite.position * (Vector2.ONE - direction)
+	_attack_area.transform = Transform2D(0.0, direction, 0.0, offset)
 
 func _on_animation_finished() -> void:
 	match _animation_state:

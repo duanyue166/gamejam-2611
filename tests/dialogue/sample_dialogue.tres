@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://b6d8sfysb1npe"]
+
+[ext_resource type="Script" uid="uid://bdj7ffqn1w8l3" path="res://resources/dialogue/dialogue_data.gd" id="1_dialogue"]
+[ext_resource type="Script" uid="uid://dd4w2voxc2tm4" path="res://resources/dialogue/dialogue_line.gd" id="2_line"]
+[ext_resource type="Resource" uid="uid://blk31ue5r7eax" path="res://tests/dialogue/sample_player.tres" id="3_player"]
+
+[sub_resource type="Resource" id="Resource_player_line"]
+script = ExtResource("2_line")
+speaker = ExtResource("3_player")
+text = "这里还有一条路。我先过去看看。"
+
+[sub_resource type="Resource" id="Resource_narration"]
+script = ExtResource("2_line")
+text = "长按空格可以跳得更高。"
+
+[resource]
+script = ExtResource("1_dialogue")
+id = &"test_stage_intro"
+lines = Array[ExtResource("2_line")]([SubResource("Resource_player_line"), SubResource("Resource_narration")])

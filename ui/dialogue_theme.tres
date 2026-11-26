@@ -1,0 +1,31 @@
+[gd_resource type="Theme" format=3 uid="uid://dpkanx7fjjvt6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialogue"]
+content_margin_left = 44.0
+content_margin_top = 24.0
+content_margin_right = 44.0
+content_margin_bottom = 24.0
+bg_color = Color(0.057, 0.075, 0.105, 0.97)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.29, 0.52, 0.54, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[resource]
+DialogueHint/base_type = &"Label"
+DialogueHint/colors/font_color = Color(0.67, 0.79, 0.81, 1)
+DialogueHint/font_sizes/font_size = 22
+DialogueSpeaker/base_type = &"Label"
+DialogueSpeaker/colors/font_color = Color(0.57, 0.87, 0.84, 1)
+DialogueSpeaker/font_sizes/font_size = 32
+DialogueText/base_type = &"RichTextLabel"
+DialogueText/colors/default_color = Color(0.94, 0.96, 0.96, 1)
+DialogueText/constants/line_separation = 8
+DialogueText/font_sizes/normal_font_size = 32
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_dialogue")
+VBoxContainer/constants/separation = 12

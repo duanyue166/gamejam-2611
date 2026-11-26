@@ -1,17 +1,18 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://15ofoi27363d"]
 
-[ext_resource type="Script" path="res://ui/gameplay_ui.gd" id="1_ui"]
+[ext_resource type="Script" uid="uid://bhxjqf4akyp2e" path="res://ui/gameplay_ui.gd" id="1_ui"]
 [ext_resource type="Texture2D" uid="uid://cjnynxuy6f86u" path="res://assets/test/ui/heart.png" id="2_full"]
 [ext_resource type="Texture2D" uid="uid://ca6nprubeblyv" path="res://assets/test/ui/heart_empty.png" id="3_empty"]
 
-[node name="GameplayUI" type="CanvasLayer"]
+[node name="GameplayUI" type="CanvasLayer" unique_id=1018322951]
 layer = 10
 script = ExtResource("1_ui")
 full_heart_texture = ExtResource("2_full")
 empty_heart_texture = ExtResource("3_empty")
 
-[node name="Hearts" type="HFlowContainer" parent="."]
+[node name="Hearts" type="HFlowContainer" parent="." unique_id=1155363151]
 texture_filter = 1
+anchors_preset = 10
 anchor_right = 1.0
 offset_left = 24.0
 offset_top = 24.0

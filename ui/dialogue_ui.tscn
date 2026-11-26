@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://b1dl4g11scpn3"]
+
+[ext_resource type="Script" uid="uid://crr5mdi3i5q10" path="res://ui/dialogue_ui.gd" id="1_ui"]
+[ext_resource type="Theme" uid="uid://dpkanx7fjjvt6" path="res://ui/dialogue_theme.tres" id="2_theme"]
+
+[node name="DialogueUI" type="CanvasLayer" unique_id=60733078]
+process_mode = 2
+layer = 90
+script = ExtResource("1_ui")
+
+[node name="Overlay" type="Control" parent="." unique_id=973570080]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+
+[node name="Backdrop" type="ColorRect" parent="Overlay" unique_id=1557830174]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.05, 0.08, 0.5)
+
+[node name="Portrait" type="TextureRect" parent="Overlay" unique_id=660612380]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 1.0
+anchor_right = 0.15
+anchor_bottom = 1.0
+offset_top = -792.0
+offset_right = 430.0
+offset_bottom = -300.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Panel" type="PanelContainer" parent="Overlay" unique_id=1087212150]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.12
+anchor_top = 1.0
+anchor_right = 0.88
+anchor_bottom = 1.0
+offset_top = -304.0
+offset_bottom = -52.0
+
+[node name="Content" type="VBoxContainer" parent="Overlay/Panel" unique_id=290878657]
+layout_mode = 2
+
+[node name="Speaker" type="Label" parent="Overlay/Panel/Content" unique_id=509237464]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DialogueSpeaker"
+
+[node name="Body" type="RichTextLabel" parent="Overlay/Panel/Content" unique_id=1176674670]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"DialogueText"
+
+[node name="Hint" type="Label" parent="Overlay/Panel/Content" unique_id=2056272180]
+layout_mode = 2
+theme_type_variation = &"DialogueHint"
+text = "E 继续"
+horizontal_alignment = 2

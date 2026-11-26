@@ -32,6 +32,14 @@ func get_gates() -> Array[StageExit]:
 	return gates
 
 
+func get_dialogue_triggers() -> Array[DialogueTrigger]:
+	var triggers: Array[DialogueTrigger] = []
+	for area in find_children("*", "Area2D", true, false):
+		if area is DialogueTrigger:
+			triggers.append(area)
+	return triggers
+
+
 func get_actor_container() -> Node2D:
 	return $Actors
 

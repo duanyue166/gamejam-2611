@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://ksu861xvggho" path="res://tests/test_bg.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" path="res://ui/gameplay_ui.tscn" id="5_gameplay_ui"]
 [ext_resource type="PackedScene" uid="uid://c5w4xdectf017" path="res://ui/stage_transition.tscn" id="6_stage_transition"]
+[ext_resource type="PackedScene" uid="uid://b1dl4g11scpn3" path="res://ui/dialogue_ui.tscn" id="7_dialogue_ui"]
+[ext_resource type="PackedScene" path="res://ui/menu_ui.tscn" id="8_menu_ui"]
 
 [node name="Main" type="Node" unique_id=1521315473]
 script = ExtResource("1_lquwl")
@@ -26,4 +28,9 @@ rewind_effect_layer = NodePath("../EffectLayer")
 
 [node name="GameplayUI" parent="." unique_id=796664516 instance=ExtResource("5_gameplay_ui")]
 
+[node name="DialogueUI" parent="." unique_id=1839702971 instance=ExtResource("7_dialogue_ui")]
+visible = false
+
 [node name="StageTransition" parent="." unique_id=1043857719 instance=ExtResource("6_stage_transition")]
+
+[node name="MenuUI" parent="." instance=ExtResource("8_menu_ui")]

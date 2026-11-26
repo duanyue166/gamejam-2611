@@ -3,6 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://dt0acnut7n1w" path="res://stages/StageTemplate.tscn" id="1_dywvm"]
 [ext_resource type="TileSet" uid="uid://dg2rt6g3a62v0" path="res://resources/tileset/debug_tileset_2x.tres" id="2_hh1an"]
 [ext_resource type="Texture2D" uid="uid://de0jbk4sjhruw" path="res://assets/test/Tiles.png" id="2_io7e3"]
+[ext_resource type="PackedScene" path="res://stages/dialogue_trigger.tscn" id="4_dialogue_trigger"]
+[ext_resource type="Resource" uid="uid://b6d8sfysb1npe" path="res://tests/dialogue/sample_dialogue.tres" id="5_sample_dialogue"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pu20y"]
 texture = ExtResource("2_io7e3")
@@ -126,6 +128,15 @@ theme_override_font_sizes/font_size = 20
 text = "前往
 攻击测试"
 
+[node name="DialogueHint" type="Label" parent="Control" index="5" unique_id=1129926661]
+layout_mode = 0
+offset_left = -296.0
+offset_top = -152.0
+offset_right = -98.0
+offset_bottom = -117.0
+theme_override_font_sizes/font_size = 24
+text = "对话测试"
+
 [node name="StageExit" parent="." index="7"]
 position = Vector2(-893, -255)
 target_stage_path = "res://tests/test_stage_attack.tscn"
@@ -137,3 +148,7 @@ shape = SubResource("RectangleShape2D_g81ma")
 
 [node name="FromAttack" type="Marker2D" parent="SpawnPoints" index="0" unique_id=1509908875]
 position = Vector2(-704, 8)
+
+[node name="DialogueTrigger" parent="." index="9" unique_id=106327849 instance=ExtResource("4_dialogue_trigger")]
+position = Vector2(-256, -48)
+dialogue = ExtResource("5_sample_dialogue")

@@ -1,0 +1,299 @@
+[gd_scene format=3 uid="uid://bexusjv8wbvt5"]
+
+[ext_resource type="Script" uid="uid://dlbhib4alqfg8" path="res://ui/menu_ui.gd" id="1_ui"]
+[ext_resource type="Theme" uid="uid://bs53cdrntin3p" path="res://ui/menu_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" uid="uid://sdojdb5jhksl" path="res://assets/test/bg/1.png" id="3_sky"]
+[ext_resource type="Texture2D" uid="uid://b44vo3yb37bu3" path="res://assets/test/bg/2.png" id="4_clouds"]
+[ext_resource type="Texture2D" uid="uid://dx7yswei61khx" path="res://assets/test/bg/4.png" id="5_horizon"]
+
+[sub_resource type="Gradient" id="Gradient_shade"]
+offsets = PackedFloat32Array(0, 0.45, 1)
+colors = PackedColorArray(0.045, 0.028, 0.09, 0.88, 0.06, 0.04, 0.12, 0.74, 0.07, 0.035, 0.14, 0.05)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_shade"]
+gradient = SubResource("Gradient_shade")
+width = 512
+height = 1
+
+[node name="MenuUI" type="CanvasLayer" unique_id=1514970471]
+process_mode = 3
+layer = 100
+script = ExtResource("1_ui")
+
+[node name="Overlay" type="Control" parent="." unique_id=789979752]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+
+[node name="Background" type="Control" parent="Overlay" unique_id=1318215586]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Sky" type="TextureRect" parent="Overlay/Background" unique_id=1625178182]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_sky")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Clouds" type="TextureRect" parent="Overlay/Background" unique_id=1384785690]
+modulate = Color(1, 1, 1, 0.68)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_clouds")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Horizon" type="TextureRect" parent="Overlay/Background" unique_id=1408953987]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_horizon")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Shade" type="TextureRect" parent="Overlay/Background" unique_id=193106514]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_shade")
+expand_mode = 1
+
+[node name="Dimmer" type="ColorRect" parent="Overlay" unique_id=1674836904]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.022, 0.07, 0.69)
+
+[node name="MainMenu" type="MarginContainer" parent="Overlay" unique_id=371913152]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -216.0
+offset_right = 216.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Content" type="VBoxContainer" parent="Overlay/MainMenu" unique_id=1874130530]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 38
+
+[node name="Brand" type="VBoxContainer" parent="Overlay/MainMenu/Content" unique_id=635717636]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="Overlay/MainMenu/Content/Brand" unique_id=1018116289]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.99, 0.96, 0.92, 1)
+theme_override_colors/font_shadow_color = Color(0.08, 0.04, 0.15, 0.8)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 6
+theme_override_font_sizes/font_size = 116
+
+[node name="Actions" type="VBoxContainer" parent="Overlay/MainMenu/Content" unique_id=591632937]
+custom_minimum_size = Vector2(432, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 15
+
+[node name="Start" type="Button" parent="Overlay/MainMenu/Content/Actions" unique_id=1510045895]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "开始游戏"
+
+[node name="Settings" type="Button" parent="Overlay/MainMenu/Content/Actions" unique_id=484415074]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "设置"
+
+[node name="Quit" type="Button" parent="Overlay/MainMenu/Content/Actions" unique_id=286491228]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "退出游戏"
+
+[node name="Modal" type="CenterContainer" parent="Overlay" unique_id=609875795]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Overlay/Modal" unique_id=1344972401]
+custom_minimum_size = Vector2(584, 0)
+layout_mode = 2
+
+[node name="PauseMenu" type="VBoxContainer" parent="Overlay/Modal/Panel" unique_id=573118286]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Overlay/Modal/Panel/PauseMenu" unique_id=1839276173]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "游戏暂停"
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="Overlay/Modal/Panel/PauseMenu" unique_id=753194293]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.72, 0.85, 1)
+theme_override_font_sizes/font_size = 23
+text = "按 Esc 继续游戏"
+horizontal_alignment = 1
+
+[node name="Continue" type="Button" parent="Overlay/Modal/Panel/PauseMenu" unique_id=2032534324]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_type_variation = &"PrimaryButton"
+text = "继续游戏"
+
+[node name="Restart" type="Button" parent="Overlay/Modal/Panel/PauseMenu" unique_id=1804168435]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 66)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "重新开始本关"
+
+[node name="MainMenuButton" type="Button" parent="Overlay/Modal/Panel/PauseMenu" unique_id=1296299091]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 66)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "返回主菜单"
+
+[node name="DeathMenu" type="VBoxContainer" parent="Overlay/Modal/Panel" unique_id=2109729910]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Title" type="Label" parent="Overlay/Modal/Panel/DeathMenu" unique_id=2109882583]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.69, 0.76, 1)
+theme_override_font_sizes/font_size = 56
+text = "你已死亡"
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="Overlay/Modal/Panel/DeathMenu" unique_id=1976489745]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.72, 0.85, 1)
+theme_override_font_sizes/font_size = 25
+text = "从本关起点复活"
+horizontal_alignment = 1
+
+[node name="Revive" type="Button" parent="Overlay/Modal/Panel/DeathMenu" unique_id=994311365]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_type_variation = &"PrimaryButton"
+text = "复活"
+
+[node name="SettingsMenu" type="VBoxContainer" parent="Overlay/Modal/Panel" unique_id=1186286479]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="Overlay/Modal/Panel/SettingsMenu" unique_id=1753712230]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "设置"
+horizontal_alignment = 1
+
+[node name="Audio" type="VBoxContainer" parent="Overlay/Modal/Panel/SettingsMenu" unique_id=121222206]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="Overlay/Modal/Panel/SettingsMenu/Audio" unique_id=665033896]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Overlay/Modal/Panel/SettingsMenu/Audio/Header" unique_id=2139613869]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "总音量"
+
+[node name="VolumeValue" type="Label" parent="Overlay/Modal/Panel/SettingsMenu/Audio/Header" unique_id=2132541194]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.86, 0.82, 1)
+text = "100%"
+
+[node name="Volume" type="HSlider" parent="Overlay/Modal/Panel/SettingsMenu/Audio" unique_id=954966010]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+value = 100.0
+
+[node name="Fullscreen" type="CheckButton" parent="Overlay/Modal/Panel/SettingsMenu" unique_id=1571162087]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+tooltip_text = "可在独立游戏窗口中切换全屏"
+mouse_default_cursor_shape = 2
+text = "全屏"
+
+[node name="SettingsBack" type="Button" parent="Overlay/Modal/Panel/SettingsMenu" unique_id=699417276]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "返回"

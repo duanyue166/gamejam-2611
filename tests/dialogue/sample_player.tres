@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="DialogueCharacter" format=3 uid="uid://blk31ue5r7eax"]
+
+[ext_resource type="Script" uid="uid://30mvd14cpa03" path="res://resources/dialogue/dialogue_character.gd" id="1_character"]
+[ext_resource type="Texture2D" uid="uid://dbpwsib80jw8g" path="res://assets/test/player/male_hero_template-design.png" id="2_player"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portrait"]
+atlas = ExtResource("2_player")
+region = Rect2(53, 48, 20, 32)
+filter_clip = true
+
+[resource]
+script = ExtResource("1_character")
+id = &"player"
+display_name = "主角"
+portraits = Dictionary[StringName, Texture2D]({
+&"default": SubResource("AtlasTexture_portrait")
+})
