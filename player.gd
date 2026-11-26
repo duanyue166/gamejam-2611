@@ -33,6 +33,8 @@ const PLAYER_STONE_SCENE: PackedScene = preload("res://player_stone.tscn")
 @export var rewind_effect_layer: Node2D
 @export_range(1, 99, 1, "or_greater") var max_health: int = 5
 
+var stage_actors: Node2D
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var health: int = max_health
 @onready var _hazard_detector: Area2D = $HazardDetector
@@ -116,7 +118,8 @@ func is_petrified() -> bool:
 
 func _petrify() -> void:
 	_stone = PLAYER_STONE_SCENE.instantiate() as PlayerStone
-	get_parent().add_child(_stone)
+	var stone_parent: Node = stage_actors if is_instance_valid(stage_actors) else get_parent()
+	stone_parent.add_child(_stone)
 	_stone.global_position = global_position
 	_stone.reset_physics_interpolation()
 	_stone.begin(up_direction, velocity, is_on_floor())

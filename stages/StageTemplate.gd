@@ -2,24 +2,43 @@ class_name StageTemplate
 extends Node2D
 
 
-signal stage_exit_entered(player: DebugPlayer, target_stage_path: String)
-
-@onready var spawn_point: Marker2D = $SpawnPoint
+const DEFAULT_SPAWN := &"default"
 
 
-func spawn(player: Node2D, spawn_id: StringName = &"default") -> void:
-	var marker := get_spawn_point(spawn_id)
+# Also used by the Inspector on off-tree stages with non-tool scripts.
+static func collect_spawn_points(stage: Node) -> Dictionary[StringName, Marker2D]:
+	var points: Dictionary[StringName, Marker2D] = {}
+	var default_marker := stage.get_node_or_null(^"SpawnPoint") as Marker2D
+	if default_marker != null:
+		points[DEFAULT_SPAWN] = default_marker
 
-	if player.get_parent():
-		player.reparent($Actors)
-
-	else:
-		$Actors.add_child(player)
-
-	player.global_position = marker.global_position
+	var container := stage.get_node_or_null(^"SpawnPoints")
+	if container != null:
+		for child in container.get_children():
+			if child is Marker2D and not points.has(child.name):
+				points[child.name] = child
+	return points
 
 
 func get_spawn_point(id: StringName) -> Marker2D:
-	if id == &"default":
-		return spawn_point
-	return null
+	return collect_spawn_points(self).get(id)
+
+
+func get_gates() -> Array[StageExit]:
+	var gates: Array[StageExit] = []
+	for area in find_children("*", "Area2D", true, false):
+		if area is StageExit:
+			gates.append(area)
+	return gates
+
+
+func get_actor_container() -> Node2D:
+	return $Actors
+
+
+func on_enter(_player: DebugPlayer) -> void:
+	pass
+
+
+func on_exit(_player: DebugPlayer) -> void:
+	pass

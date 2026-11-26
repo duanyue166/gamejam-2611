@@ -14,14 +14,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAACAAAAAAAAAAEAAAACAAAAAAAAAAIAAAACAAA
 [node name="SpawnPoint" parent="." index="1" unique_id=1601979544]
 position = Vector2(3768, 776)
 
-[node name="StageExit" parent="." index="4"]
-target_stage_path = "res://tests/test_stage.tscn"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StageExit" index="0" unique_id=898548506]
-position = Vector2(4032, 640)
-shape = SubResource("RectangleShape2D_g81ma")
-
-[node name="Control" type="Control" parent="." index="5" unique_id=2030709933]
+[node name="Control" type="Control" parent="." index="4" unique_id=2030709933]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -46,14 +39,25 @@ offset_bottom = 601.0
 text = "石化下砸有2伤
 落地时产生1伤范围伤害"
 
-[node name="Slime" parent="." index="6" unique_id=216391717 instance=ExtResource("3_4ruw6")]
+[node name="Slime" parent="." index="5" unique_id=216391717 instance=ExtResource("3_4ruw6")]
 position = Vector2(3432, 768)
 
-[node name="Slime2" parent="." index="7" unique_id=677517500 instance=ExtResource("3_4ruw6")]
+[node name="Slime2" parent="." index="6" unique_id=677517500 instance=ExtResource("3_4ruw6")]
 position = Vector2(3288, 768)
 
-[node name="Slime3" parent="." index="8" unique_id=922461597 instance=ExtResource("3_4ruw6")]
+[node name="Slime3" parent="." index="7" unique_id=922461597 instance=ExtResource("3_4ruw6")]
 position = Vector2(3016, 768)
 
-[node name="Slime4" parent="." index="9" unique_id=1901682622 instance=ExtResource("3_4ruw6")]
+[node name="Slime4" parent="." index="8" unique_id=1901682622 instance=ExtResource("3_4ruw6")]
 position = Vector2(3160, 680)
+
+[node name="StageExit" parent="." index="9"]
+target_stage_path = "uid://co02mghagykob"
+target_spawn = &"FromAttack"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StageExit" index="0" unique_id=898548506]
+position = Vector2(4032, 640)
+shape = SubResource("RectangleShape2D_g81ma")
+
+[node name="FromTest" type="Marker2D" parent="SpawnPoints" index="0" unique_id=544770165]
+position = Vector2(3880, 776)

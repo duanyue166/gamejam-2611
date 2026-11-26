@@ -19,3 +19,5 @@ tile_set = ExtResource("1_n7jfu")
 tile_set = ExtResource("3_d1lfo")
 
 [node name="StageExit" parent="." instance=ExtResource("4_stage_exit")]
+
+[node name="SpawnPoints" type="Node2D" parent="."]

@@ -129,7 +129,11 @@ text = "前往
 [node name="StageExit" parent="." index="7"]
 position = Vector2(-893, -255)
 target_stage_path = "res://tests/test_stage_attack.tscn"
+target_spawn = &"FromTest"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StageExit" index="0" unique_id=15527348]
 position = Vector2(61, 127.5)
 shape = SubResource("RectangleShape2D_g81ma")
+
+[node name="FromAttack" type="Marker2D" parent="SpawnPoints" index="0" unique_id=1509908875]
+position = Vector2(-704, 8)

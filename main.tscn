@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ck12oxjygim6r"]
 
 [ext_resource type="Script" uid="uid://d2efwvn5xp32y" path="res://main.gd" id="1_lquwl"]
-[ext_resource type="PackedScene" uid="uid://btfiuf13f8h1o" path="res://stages/stage_01_intro.tscn" id="2_7mycd"]
+[ext_resource type="PackedScene" uid="uid://co02mghagykob" path="res://tests/test_stage.tscn" id="2_272bh"]
 [ext_resource type="PackedScene" uid="uid://b0hrb8xrj1w4d" path="res://player.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://bjxhtf4rawcxo" path="res://debug_ui.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://ksu861xvggho" path="res://tests/test_bg.tscn" id="4_1bvp3"]
@@ -10,9 +10,11 @@
 
 [node name="Main" type="Node" unique_id=1521315473]
 script = ExtResource("1_lquwl")
-main_scene = ExtResource("2_7mycd")
+main_scene = ExtResource("2_272bh")
 
 [node name="EffectLayer" type="Node2D" parent="." unique_id=1832524616]
+
+[node name="StageContainer" type="Node2D" parent="." unique_id=1364128971]
 
 [node name="Player" parent="." unique_id=1532610965 node_paths=PackedStringArray("rewind_effect_layer") instance=ExtResource("2_h2yge")]
 position = Vector2(-576, 0)
